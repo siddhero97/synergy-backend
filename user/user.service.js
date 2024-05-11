@@ -1,11 +1,18 @@
-const User = require('./user.model'); // Assuming you have a User model
+const {
+    User,
+    USER_MODEL_NAME
+} = require('./user.model'); // Assuming you have a User model
+const {
+    createUserCouchbase
+} = require('../database');
 
-// Create a new user
+const {
+    generateUUID
+} = require('../utils');
+// Create a new user;
 async function createUser(userData) {
     try {
-        const newUser = new User(userData);
-        const savedUser = await newUser.save();
-        return savedUser;
+        await createUserCouchbase(userData);
     } catch (error) {
         throw new Error(`Failed to create user ${error}`);
     }

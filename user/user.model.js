@@ -8,12 +8,12 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        // unique: true
+        unique: true
     },
     linkedinId: {
         type: String,
         required: true,
-        // unique: true
+        unique: true
     },
     designation: {
         type: String,
@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
+const USER_MODEL_NAME = 'User';
+const User = mongoose.model(USER_MODEL_NAME, userSchema);
 
-module.exports = User;
+module.exports = {
+    User,
+    USER_MODEL_NAME
+};
