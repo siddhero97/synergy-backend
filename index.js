@@ -7,6 +7,8 @@ const contactsRoute = require('./contacts/contacts.route');
 
 const cors = require('cors');
 
+const cors = require('cors');
+
 // Create Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,8 +19,6 @@ app.use(cors());
 app.use(express.json());
 // Can I have a user route?
 app.use('/users', userRoute);
-
-
 
 
 // Start the server
