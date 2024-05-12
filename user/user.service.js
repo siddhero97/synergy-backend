@@ -9,10 +9,10 @@ async function createUser(userData) {
         const data = {
             name: userData.name,
             email: userData.email,
-            linkedinId: userData.linkedinurl,
+            linkedinId: userData.linkedinurl || userData.linkedinId,
             designation: userData.designation,
-            companyName: userData.company,
-            phoneNumber: userData.phone,
+            companyName: userData.company || userData.companyName,
+            phoneNumber: userData.phone || userData.phoneNumber,
             location: userData.location,
             password: userData.password
         }

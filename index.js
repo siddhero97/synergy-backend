@@ -3,9 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoute = require('./user/user.route');
-const contactsRoute = require('./contacts/contacts.route');
-
-const cors = require('cors');
 
 const cors = require('cors');
 
@@ -39,3 +36,18 @@ async function connectToMongoDB() {
         console.error('Error connecting to MongoDB:', error);
     }
 }
+
+app.use((err, req, res, next) => {
+    // Log the error
+    console.error(err.stack);
+
+    // Set the status code based on the error
+    const statusCode = err.statusCode || 500;
+
+    // Respond with the error message
+    res.status(statusCode).json({
+        error: {
+            message: err.message
+        }
+    });
+});

@@ -1,10 +1,19 @@
 const userService = require('./user.service');
 
-async function get(req, res, next) {
+async function getUsers(req, res, next) {
     try {
-        res.json(await userService.getMultiple(req.userId));
+        res.json(await userService.getUsers());
     } catch (err) {
         console.error(`Error while getting users`, err.message);
+        next(err);
+    }
+}
+
+async function getUserById(req, res, next) {
+    try {
+        res.json(await userService.getUserById(req.userId));
+    } catch (err) {
+        console.error(`Error while getting user by id`, err.message);
         next(err);
     }
 }
@@ -20,7 +29,7 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
     try {
-        res.json(await userService.update(req.userId, req.body));
+        res.json(await userService.updateUser(req.userId, req.body));
     } catch (err) {
         console.error(`Error while updating users`, err.message);
         next(err);
@@ -29,7 +38,7 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
     try {
-        res.json(await userService.remove(req.params.id));
+        res.json(await userService.deleteUser(req.userId));
     } catch (err) {
         console.error(`Error while deleting users`, err.message);
         next(err);
@@ -56,7 +65,8 @@ async function login(req, res, next) {
 
 
 module.exports = {
-    get,
+    getUsers,
+    getUserById,
     create,
     update,
     remove,
