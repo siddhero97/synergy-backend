@@ -44,6 +44,7 @@ async function getUserById(userId) {
         const user = result.content;
         return user;
     } catch (error) {
+        console.log("Failed to get user: ", error.message);
         throw new Error('Failed to get users');
     }
 }
