@@ -1,14 +1,5 @@
 const userService = require('./user.service');
 
-async function getUsers(req, res, next) {
-    try {
-        res.json(await userService.getUsers());
-    } catch (err) {
-        console.error(`Error while getting users`, err.message);
-        next(err);
-    }
-}
-
 async function getUserById(req, res, next) {
     try {
         res.json(await userService.getUserById(req.params.userId));
