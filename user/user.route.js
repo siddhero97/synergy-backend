@@ -9,6 +9,8 @@ router.get('/', userController.get);
 /* POST programming language */
 router.post('/create', userController.create);
 
+
+router.post('/login', userController.login);
 /* PUT programming language */
 router.put('/:id', userController.update);
 

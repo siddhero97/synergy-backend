@@ -1,9 +1,22 @@
 const User = require('./user.model'); // Assuming you have a User model
-
+const jwt = require("jsonwebtoken")
+require('dotenv').config();
+const JSON_KEY = process.env.JSON_KEY;
 // Create a new user
 async function createUser(userData) {
     try {
-        const newUser = new User(userData);
+        // Map the request body to the user schema
+        const data = {
+            name: userData.name,
+            email: userData.email,
+            linkedinId: userData.linkedinurl,
+            designation: userData.designation,
+            companyName: userData.company,
+            phoneNumber: userData.phone,
+            location: userData.location,
+            password: userData.password
+        }
+        const newUser = new User(data);
         const savedUser = await newUser.save();
         return savedUser;
     } catch (error) {
@@ -34,6 +47,9 @@ async function getUserById(userId) {
 // Update a user by ID
 async function updateUser(userId, userData) {
     try {
+        if (userData.password) {
+            throw new Error('Password cannot be updated using this method');
+        }
         const updatedUser = await User.findByIdAndUpdate(userId, userData, {
             new: true
         });
@@ -53,10 +69,32 @@ async function deleteUser(userId) {
     }
 }
 
+async function login(email, password) {
+    try {
+        const user = await User.findOne({
+            email
+        });
+        console.log("user", user)
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+        if (user.password !== password) {
+            throw new Error('Wrong Password');
+        }
+        console.log("user id", user.id, user)
+        const token = jwt.sign(user.id, JSON_KEY);
+        return token;
+    } catch (error) {
+        throw new Error(`${error.message}`);
+    }
+}
+
 module.exports = {
     createUser,
     getUsers,
     getUserById,
     updateUser,
     deleteUser,
+    login
 };
