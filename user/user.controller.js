@@ -57,7 +57,6 @@ async function login(req, res, next) {
 
 
 module.exports = {
-    getUsers,
     getUserById,
     create,
     update,
