@@ -11,7 +11,6 @@ const cors = require('cors');
 // Create Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
-const CONNECTION_STRING = process.env.MONGO_URL;
 
 app.use(cors());
 // Express middleware to parse JSON bodies
