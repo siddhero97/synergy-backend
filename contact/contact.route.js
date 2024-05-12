@@ -6,13 +6,13 @@ const contactController = require('./contact.controller');
 router.get('/', contactController.getContacts);
 
 /* POST contact */
-router.post('/create', contactController.create);
+router.post('/create/:userId', contactController.create);
 
 /* PUT contact */
-router.put('/addNote/:contactId', contactController.addNote);
+router.put('/addNote/:userId/:contactId', contactController.addNote);
 
 /* DELETE contact */
-router.delete('/:contactId', contactController.remove);
+router.delete('/:userId/:contactId', contactController.remove);
 
 
 

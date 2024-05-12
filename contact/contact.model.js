@@ -11,9 +11,9 @@ const contactSchema = new mongoose.Schema({
     linkedinUrl: {
         type: String
     },
-    notes: [{
+    notes: {
         type: String
-    }]
+    }
 });
 const Contact = mongoose.model('Contact', contactSchema);
 
