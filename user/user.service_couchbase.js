@@ -3,47 +3,45 @@ const {
     USER_MODEL_NAME
 } = require('./user.model'); // Assuming you have a User model
 const {
-    createUserCouchbase
-} = require('../database');
+    connectToCouchbase
+} = require('../database_couchbase');
 
 const {
     generateUUID
 } = require('../utils');
+
+
+
 // Create a new user;
 async function createUser(userData) {
     try {
-        await createUserCouchbase(userData);
+        const { collection } = await connectToCouchbase();
+        userId = generateUUID()
+        userData.id = userId;
+        result =  await collection.insert(userId, userData);
+        return result
     } catch (error) {
         throw new Error(`Failed to create user ${error}`);
     }
 }
 
-// Get all users
-async function getUsers() {
+// Get user by id
+async function getUserbyId(userId) {
     try {
-        const users = await User.find();
-        return users;
+        const { collection } = await connectToCouchbase();
+        const user = await collection.get(userId)
+        return user;
     } catch (error) {
         throw new Error('Failed to get users');
     }
 }
 
-// Get a user by ID
-async function getUserById(userId) {
-    try {
-        const user = await User.findById(userId);
-        return user;
-    } catch (error) {
-        throw new Error('Failed to get user');
-    }
-}
 
 // Update a user by ID
 async function updateUser(userId, userData) {
     try {
-        const updatedUser = await User.findByIdAndUpdate(userId, userData, {
-            new: true
-        });
+        const { collection } = await connectToCouchbase();
+        const updatedUser = await collection.replace(userId,userData)
         return updatedUser;
     } catch (error) {
         throw new Error('Failed to update user');
@@ -53,7 +51,8 @@ async function updateUser(userId, userData) {
 // Delete a user by ID
 async function deleteUser(userId) {
     try {
-        await User.findByIdAndDelete(userId);
+        const { collection } = await connectToCouchbase();
+        await collenction.remove(userId);
         return 'User deleted successfully';
     } catch (error) {
         throw new Error('Failed to delete user');
@@ -62,8 +61,7 @@ async function deleteUser(userId) {
 
 module.exports = {
     createUser,
-    getUsers,
-    getUserById,
+    getUserbyId,
     updateUser,
     deleteUser,
 };
