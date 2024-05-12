@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoute = require('./user/user.route');
+const contactRoute = require('./contact/contact.route');
+
 
 const cors = require('cors');
 
@@ -16,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 // Can I have a user route?
 app.use('/users', userRoute);
+app.use('/contacts', contactRoute);
 
 
 // Start the server
