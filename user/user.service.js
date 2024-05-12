@@ -88,7 +88,7 @@ async function login(email, password) {
         }
         console.log("user id", user.id, user)
         const token = jwt.sign(user.id, JSON_KEY);
-        return token;
+        return {token:token, userId: user.id};
     } catch (error) {
         throw new Error(`${error.message}`);
     }
