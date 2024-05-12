@@ -12,7 +12,8 @@ const getContacts = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        res.json(await ContactService.createContact(req.body));
+        const userId = req.params.userId;
+        res.json(await ContactService.createContact(userId,req.body));
     } catch (err) {
         console.error(`Error while creating users`, err.message);
         next(err);
@@ -22,7 +23,9 @@ const create = async (req, res, next) => {
 const addNote = async (req, res, next) => {
     // Implement your logic to add a note to a contact
     try {
-        res.json(await ContactService.addNoteToContact(req.params.contactId, req.body));
+        const userId = req.params.userId;
+        const contactId = req.params.contactId;
+        res.json(await ContactService.addNoteToContact(userId, contactId, req.body.note));
     } catch (err) {
         console.error(`Error while adding note to contact`, err.message);
         next(err);
@@ -31,8 +34,10 @@ const addNote = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
     // Implement your logic to remove a contact
-    try {
-        res.json(await ContactService.removeContact(req.params.contactId));
+    try {  
+        const userId = req.params.userId;
+        const contactId = req.params.contactId;
+        res.json(await ContactService.removeContact(userId,contactId));
     } catch (err) {
         console.error(`Error while removing users`, err.message);
         next(err);

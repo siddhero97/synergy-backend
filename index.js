@@ -24,21 +24,7 @@ app.use('/contacts', contactRoute);
 // Start the server
 app.listen(PORT, async () => {
     console.log(`Server started on http://localhost:${PORT}`);
-    await connectToMongoDB();
-
 });
-
-async function connectToMongoDB() {
-    try {
-        await mongoose.connect(CONNECTION_STRING, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-        console.log('Connected to MongoDB');
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-    }
-}
 
 app.use((err, req, res, next) => {
     // Log the error
